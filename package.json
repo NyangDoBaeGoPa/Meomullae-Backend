@@ -18,6 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "commit": "cz",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -34,6 +35,8 @@
     "@nestjs/platform-express": "^9.0.0",
     "commitizen": "^4.2.6",
     "cz-conventional-changelog": "^3.3.0",
+    "cz-emoji": "^1.3.2-canary.2",
+    "cz-emoji-conventional": "^1.0.1",
     "lint-staged": "^13.1.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
@@ -85,11 +88,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "config": {
     "commitizen": {
