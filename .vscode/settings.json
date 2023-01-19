@@ -1,0 +1,16 @@
+{
+  "cSpell.words": [
+    "cloudinary",
+    "icomoon",
+    "omnm",
+    "Spoqa",
+    "tailwindcss",
+    "tanstack"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "typescript"]
+}

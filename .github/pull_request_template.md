@@ -1,8 +1,7 @@
 ## 🔗 References
 
-- Notion Task Board (link):
-- Issue (Link)
-- Slack (link):
+- [Notion Task Board](link):
+- [Slack](link):
 - Others:
 
 ## ✔️ Required Self Checklist
