@@ -1,5 +1,4 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Survey } from '@root/survey/survey.entity';
 
 export const typeORMConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -8,7 +7,7 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   username: 'meomullae_poo6_user',
   password: 'odNk3dPLLv9QvzbTORCPchFI21aF99Ke',
   database: 'meomullae_poo6',
-  entities: [Survey],
+  entities: [__dirname + '/../entities/*.*'],
   synchronize: false,
   extra: {
     ssl: {
