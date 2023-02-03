@@ -1,13 +1,12 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
-import { Survey } from './survey.entity';
 import { SurveyService } from './survey.service';
 
 @Controller('survey')
 export class SurveyController {
   constructor(private surveyService: SurveyService) {}
   @Get('/')
-  getBoardById(@Param('id') id: number): Promise<Survey> {
-    return this.surveyService.findAll();
+  getSurveyByType(@Query('type') type: string) {
+    return this.surveyService.find(type);
   }
 }

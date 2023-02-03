@@ -1,6 +1,17 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository, EntityRepository } from 'typeorm';
 
-import { Survey } from './survey.entity';
+import { Survey } from '../entities/Survey.entity';
 
 @EntityRepository(Survey)
-export class SurveyRepository extends Repository<Survey> {}
+export class SurveyRepository extends Repository<Survey> {
+  async getSurveyByType(type: string): Promise<Survey[]> {
+    return await this.find({
+      relations: ['surveyQuestions', 'surveyType'],
+      where: {
+        surveyType: {
+          typeName: type,
+        },
+      },
+    });
+  }
+}

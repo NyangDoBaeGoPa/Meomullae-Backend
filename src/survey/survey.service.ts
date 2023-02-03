@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Survey } from '@root/entities/Survey.entity';
 
-import { Survey } from './survey.entity';
 import { SurveyRepository } from './survey.repository';
 
 @Injectable()
@@ -11,9 +11,7 @@ export class SurveyService {
     private surveyRepository: SurveyRepository,
   ) {}
 
-  async findAll(): Promise<Survey> {
-    const survey = await this.surveyRepository.findOne(1);
-
-    return survey;
+  async find(type: string): Promise<Survey[]> {
+    return this.surveyRepository.getSurveyByType(type);
   }
 }
