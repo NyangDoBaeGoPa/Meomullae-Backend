@@ -6,7 +6,7 @@ import { SurveyService } from './survey.service';
 export class SurveyController {
   constructor(private surveyService: SurveyService) {}
   @Get('/')
-  getSurveyByType(@Query('type') type: string): Promise<any[]> {
+  getSurveyByType(@Query('type') type: string): Promise<Object> {
     return this.surveyService.getSurveyByType(type);
   }
 }

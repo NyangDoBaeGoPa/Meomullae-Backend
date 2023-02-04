@@ -4,11 +4,11 @@ import { Repository, EntityRepository } from 'typeorm';
 
 @EntityRepository(SurveyAnswer)
 export class SurveyAnswerRepository extends Repository<SurveyAnswer> {
-  async getSurveyAnswers(survey: Survey[]): Promise<SurveyAnswer[]> {
+  async getSurveyAnswers(survey: Survey): Promise<SurveyAnswer[]> {
     const answers = [];
-    for (const question of survey[0]['surveyQuestions']) {
+    for (const question of survey['surveyQuestions']) {
       answers.push(
-        await this.find({
+        await this.findOne({
           relations: ['question', 'answerType', 'singleChoiceAnswers'],
           where: {
             question: {
