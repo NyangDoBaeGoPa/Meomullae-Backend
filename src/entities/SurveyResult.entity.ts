@@ -1,7 +1,7 @@
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { SurveyAnswerResult } from './SurveyAnswerResult.entity';
-import { SurveyResultMbti } from './SurveyResultMbti.entity';
+import { SurveyResultMBTI } from './SurveyResultMBTI.entity';
 import { SurveyResultRestaurant } from './SurveyResultRestaurant.entity';
 
 @Index('survey_result_pkey', ['resultId'], { unique: true })
@@ -16,8 +16,8 @@ export class SurveyResult {
   @OneToMany(() => SurveyAnswerResult, (surveyAnswerResult) => surveyAnswerResult.result)
   surveyAnswerResults: SurveyAnswerResult[];
 
-  @OneToMany(() => SurveyResultMbti, (surveyResultMbti) => surveyResultMbti.result)
-  surveyResultMbtis: SurveyResultMbti[];
+  @OneToMany(() => SurveyResultMBTI, (surveyResultMbti) => surveyResultMbti.result)
+  surveyResultMbtis: SurveyResultMBTI[];
 
   @OneToMany(
     () => SurveyResultRestaurant,

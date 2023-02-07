@@ -1,12 +1,12 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 
-import { MbtiContent } from './MbtiContent.entity';
-import { MbtiRelationship } from './MbtiRelationship.entity';
-import { SurveyResultMbti } from './SurveyResultMbti.entity';
+import { MBTIContent } from './MBTIContent.entity';
+import { MBTIRelationship } from './MBTIRelationship.entity';
+import { SurveyResultMBTI } from './SurveyResultMBTI.entity';
 
 @Index('MBTI_result_pkey', ['mbtiId'], { unique: true })
 @Entity('MBTI_result', { schema: 'public' })
-export class MbtiResult {
+export class MBTIResult {
   @Column('integer', { primary: true, name: 'mbti_id' })
   mbtiId: number;
 
@@ -22,15 +22,15 @@ export class MbtiResult {
   @Column('character varying', { name: 'mbti_type' })
   mbtiType: string;
 
-  @OneToMany(() => MbtiContent, (mbtiContent) => mbtiContent.mbti)
-  mbtiContents: MbtiContent[];
+  @OneToMany(() => MBTIContent, (mbtiContent) => mbtiContent.mbti)
+  mbtiContents: MBTIContent[];
 
-  @OneToMany(() => MbtiRelationship, (mbtiRelationship) => mbtiRelationship.matchMbti)
-  mbtiRelationships: MbtiRelationship[];
+  @OneToMany(() => MBTIRelationship, (mbtiRelationship) => mbtiRelationship.matchMbti)
+  mbtiRelationships: MBTIRelationship[];
 
-  @OneToMany(() => MbtiRelationship, (mbtiRelationship) => mbtiRelationship.mbti)
-  mbtiRelationships2: MbtiRelationship[];
+  @OneToMany(() => MBTIRelationship, (mbtiRelationship) => mbtiRelationship.mbti)
+  mbtiRelationships2: MBTIRelationship[];
 
-  @OneToMany(() => SurveyResultMbti, (surveyResultMbti) => surveyResultMbti.mbti)
-  surveyResultMbtis: SurveyResultMbti[];
+  @OneToMany(() => SurveyResultMBTI, (surveyResultMbti) => surveyResultMbti.mbti)
+  surveyResultMbtis: SurveyResultMBTI[];
 }

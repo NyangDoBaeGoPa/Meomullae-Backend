@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { DelieveryRestaurant } from './DelieveryRestaurant.entity';
+import { DeliveryRestaurant } from './DeliveryRestaurant.entity';
 import { SurveyResult } from './SurveyResult.entity';
 
 @Index('survey_result_restaurant_pkey', ['surveyResultRestaurantId'], {
@@ -18,11 +18,11 @@ export class SurveyResultRestaurant {
   surveyResultRestaurantId: number;
 
   @ManyToOne(
-    () => DelieveryRestaurant,
-    (delieveryRestaurant) => delieveryRestaurant.surveyResultRestaurants,
+    () => DeliveryRestaurant,
+    (deliveryRestaurant) => deliveryRestaurant.surveyResultRestaurants,
   )
   @JoinColumn([{ name: 'restaurant_id', referencedColumnName: 'restaurantId' }])
-  restaurant: DelieveryRestaurant;
+  restaurant: DeliveryRestaurant;
 
   @ManyToOne(() => SurveyResult, (surveyResult) => surveyResult.surveyResultRestaurants)
   @JoinColumn([{ name: 'result_id', referencedColumnName: 'resultId' }])

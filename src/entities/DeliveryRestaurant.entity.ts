@@ -2,9 +2,9 @@ import { Column, Entity, Index, OneToMany } from 'typeorm';
 
 import { SurveyResultRestaurant } from './SurveyResultRestaurant.entity';
 
-@Index('delievery_restaurant_pkey', ['restaurantId'], { unique: true })
-@Entity('delievery_restaurant', { schema: 'public' })
-export class DelieveryRestaurant {
+@Index('delivery_restaurant_pkey', ['restaurantId'], { unique: true })
+@Entity('delivery_restaurant', { schema: 'public' })
+export class DeliveryRestaurant {
   @Column('integer', { primary: true, name: 'restaurant_id' })
   restaurantId: number;
 
