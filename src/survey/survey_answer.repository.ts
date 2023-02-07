@@ -7,7 +7,7 @@ export class SurveyAnswerRepository extends Repository<SurveyAnswer> {
   async getSurveyAnswers(survey: Survey): Promise<SurveyAnswer[]> {
     const answers = [];
 
-    survey['surveyQuestions'].forEach(async (question) => {
+    const promises = survey['surveyQuestions'].map(async (question) => {
       const { questionId } = question;
       const questionRelation = ['question', 'answerType', 'singleChoiceAnswers'];
       const questionQuery = {
@@ -17,8 +17,11 @@ export class SurveyAnswerRepository extends Repository<SurveyAnswer> {
         relations: questionRelation,
         where: questionQuery,
       });
+
       answers.push(answer);
     });
+
+    await Promise.all(promises);
     return answers;
   }
 }
