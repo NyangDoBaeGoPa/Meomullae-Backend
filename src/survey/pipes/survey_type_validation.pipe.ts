@@ -1,21 +1,21 @@
 import { ArgumentMetadata, BadRequestException, PipeTransform } from '@nestjs/common';
-import { isNull } from 'lodash';
+import { isUndefined } from 'lodash';
 
 export class SurveyTypeValidationPipe implements PipeTransform {
   readonly typeOptions = ['MBTI', 'Category'];
 
   transform(value: any, metadata: ArgumentMetadata) {
-    if (isNull(value)) {
-      throw new BadRequestException('survey type is empty');
+    if (isUndefined(value)) {
+      throw new BadRequestException('타입 옵션 쿼리를 넣어주세요');
     }
-    if (!this.isStatusValid(value)) {
-      throw new BadRequestException(`${value} isn't in the type options`);
+    if (!this.isOptionValid(value)) {
+      throw new BadRequestException(`${value} 는 타입 옵션이 아닙니다.`);
     }
     return value;
   }
 
-  private isStatusValid(status: any) {
-    const index = this.typeOptions.indexOf(status);
+  private isOptionValid(options: any) {
+    const index = this.typeOptions.indexOf(options);
     return index !== -1;
   }
 }
