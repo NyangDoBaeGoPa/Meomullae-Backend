@@ -1,0 +1,6 @@
+db:
+  host: 'dpg-cf6ed4ha6gdjkk49fcbg-a.oregon-postgres.render.com'
+  username: 'meomullae_poo6_user'
+  password: 'odNk3dPLLv9QvzbTORCPchFI21aF99Ke'
+  database: meomullae_poo6
+  synchronize: false

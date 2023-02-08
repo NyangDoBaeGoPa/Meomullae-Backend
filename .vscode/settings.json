@@ -1,12 +1,5 @@
 {
-  "cSpell.words": [
-    "cloudinary",
-    "icomoon",
-    "omnm",
-    "Spoqa",
-    "tailwindcss",
-    "tanstack"
-  ],
+  "cSpell.words": ["cloudinary", "icomoon", "nestjs", "omnm", "Spoqa", "tailwindcss", "tanstack"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
