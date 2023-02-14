@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
+import { CreateSurveyResultDto } from './dto/create_survey_result.dto';
 import { SurveyRepository } from './survey.repository';
 import { SurveyAnswerRepository } from './survey_answer.repository';
 
@@ -36,5 +37,9 @@ export class SurveyService {
         };
       }),
     };
+  }
+
+  async createSurveyResult(createSurveyResultDto: CreateSurveyResultDto): Promise<Object> {
+    return {};
   }
 }
