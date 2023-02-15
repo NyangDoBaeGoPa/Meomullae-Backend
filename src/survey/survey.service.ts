@@ -89,9 +89,9 @@ export class SurveyService {
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      if (err.code === '23502' && err.column === 'question_id')
+      if (err['code'] === '23502' && err['column'] === 'question_id')
         throw new BadRequestException('잘못된 question_id 입니다');
-      if (err.code === '23502' && err.column === 'single_choice_answer_id')
+      if (err['code'] === '23502' && err['column'] === 'single_choice_answer_id')
         throw new BadRequestException('잘못된 answer_id 입니다');
     } finally {
       await queryRunner.release();
