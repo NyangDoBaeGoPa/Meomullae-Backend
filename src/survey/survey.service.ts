@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSurveyResultDto } from './dto/create_survey_result.dto';
 import { SurveyRepository } from './survey.repository';
 import { SurveyAnswerRepository } from './survey_answer.repository';
+import { SurveyResultRepository } from './survey_result.repository';
 
 @Injectable()
 export class SurveyService {
@@ -13,6 +14,9 @@ export class SurveyService {
 
     @InjectRepository(SurveyAnswerRepository)
     private surveyAnswerRepository: SurveyAnswerRepository,
+
+    @InjectRepository(SurveyResultRepository)
+    private surveyResultRepository: SurveyResultRepository,
   ) {}
 
   async getSurveyByType(type: string): Promise<Object> {
@@ -39,7 +43,7 @@ export class SurveyService {
     };
   }
 
-  async createSurveyResult(createSurveyResultDto: CreateSurveyResultDto): Promise<Object> {
-    return {};
+  async createSurveyResult(createSurveyResultDto: CreateSurveyResultDto) {
+    return this.surveyResultRepository.createSurveyResult();
   }
 }
