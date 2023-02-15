@@ -13,7 +13,7 @@ export class SurveyController {
   }
 
   @Post('/')
-  createSurveyResult(@Body() createSurveyResultDto: CreateSurveyResultDto) {
+  createSurveyResult(@Body() createSurveyResultDto: CreateSurveyResultDto): Promise<Object> {
     return this.surveyService.createSurveyResult(createSurveyResultDto);
   }
 }
