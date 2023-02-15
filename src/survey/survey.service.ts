@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection } from 'typeorm';
 
@@ -71,7 +71,7 @@ export class SurveyService {
           .getCustomRepository(SurveyAnswerResultRepository)
           .createSurveyAnswerResult(surveyResult, surveyQuestion);
 
-        content.answers.map(async (answer) => {
+        const promises = content.answers.map(async (answer) => {
           // if(!isEmpty(answer.answer_content)) // 주관식 처리
           const surveyAnswer = await queryManager
             .getCustomRepository(SingleChoiceAnswerRepository)
@@ -81,13 +81,18 @@ export class SurveyService {
             .getCustomRepository(SurveySingleChoiceAnswerResultRepository)
             .createSingleChoiceAnswerResult(surveyAnswerResult, surveyAnswer);
         });
+
+        await Promise.all(promises);
       });
 
       await Promise.all(promises);
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      return err;
+      if (err.code === '23502' && err.column === 'question_id')
+        throw new BadRequestException('잘못된 question_id 입니다');
+      if (err.code === '23502' && err.column === 'single_choice_answer_id')
+        throw new BadRequestException('잘못된 answer_id 입니다');
     } finally {
       await queryRunner.release();
     }
