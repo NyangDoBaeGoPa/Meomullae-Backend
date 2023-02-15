@@ -1,23 +1,30 @@
 import { Type } from 'class-transformer';
-import { ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
 
 class Answer {
+  @IsNotEmpty()
   id: number;
+
+  @IsOptional()
   answer_content: string;
 }
 
 class Content {
+  @IsNotEmpty()
   question_id: number;
 
-  @ValidateNested({ each: true })
-  @Type(() => Content)
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => Answer)
   answers: Answer[];
 }
 
 export class CreateSurveyResultDto {
-  survey_id: string;
+  @IsNotEmpty()
+  surveyId: number;
 
-  @ValidateNested({ each: true })
+  @IsNotEmpty()
+  @ValidateNested()
   @Type(() => Content)
   contents: Content[];
 }
