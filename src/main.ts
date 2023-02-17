@@ -14,6 +14,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.enableCors();
 
   const serverConfig = config.get('server');
   const port = serverConfig.port;
