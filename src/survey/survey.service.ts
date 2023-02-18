@@ -50,7 +50,8 @@ export class SurveyService {
     const { contents } = createSurveyResultDto;
     const connection = getConnection();
     const queryRunner = connection.createQueryRunner();
-    const queryManager = queryRunner.manager;
+    const { manager: queryManager } = queryRunner;
+    const NOT_EXIST_ID = 23502;
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -89,10 +90,11 @@ export class SurveyService {
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();
-      if (err['code'] === '23502' && err['column'] === 'question_id')
-        throw new BadRequestException('잘못된 question_id 입니다');
-      if (err['code'] === '23502' && err['column'] === 'single_choice_answer_id')
-        throw new BadRequestException('잘못된 answer_id 입니다');
+      const errorCode = err['code'];
+      const tableId = err['column'];
+      if (errorCode === NOT_EXIST_ID) {
+        throw new BadRequestException(`존재하지 않는 ${tableId} 입니다`);
+      }
     } finally {
       await queryRunner.release();
     }
