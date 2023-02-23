@@ -92,6 +92,7 @@ export class SurveyService {
       await queryRunner.rollbackTransaction();
       const errorCode = err['code'];
       const tableId = err['column'];
+
       if (errorCode === NOT_EXIST_ID) {
         throw new BadRequestException(`존재하지 않는 ${tableId} 입니다`);
       }
