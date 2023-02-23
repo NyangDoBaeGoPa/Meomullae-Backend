@@ -17,4 +17,5 @@ export const typeORMConfig: TypeOrmModuleOptions = {
       rejectUnauthorized: false,
     },
   },
+  logging: true,
 };

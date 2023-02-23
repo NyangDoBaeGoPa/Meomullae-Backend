@@ -72,6 +72,11 @@ module.exports = {
         prev: ['export'],
         next: ['export'],
       },
+      {
+        blankLine: 'always',
+        prev: 'const',
+        next: 'if',
+      },
     ],
   },
 };

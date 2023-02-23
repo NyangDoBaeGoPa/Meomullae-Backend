@@ -1,8 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { getConnection } from 'typeorm';
 
+import { CreateSurveyResultDto } from './dto/create_survey_result.dto';
+import { SingleChoiceAnswerRepository } from './single_choice_answer.repository';
 import { SurveyRepository } from './survey.repository';
 import { SurveyAnswerRepository } from './survey_answer.repository';
+import { SurveyAnswerResultRepository } from './survey_answer_result.repository';
+import { SurveyQuestionRepository } from './survey_question.repository';
+import { SurveyResultRepository } from './survey_result.repository';
+import { SurveySingleChoiceAnswerResultRepository } from './survey_single_choice_answer_result.repository';
 
 @Injectable()
 export class SurveyService {
@@ -36,5 +43,63 @@ export class SurveyService {
         };
       }),
     };
+  }
+
+  async createSurveyResult(createSurveyResultDto: CreateSurveyResultDto): Promise<Object> {
+    let surveyResultId: number;
+    const { contents } = createSurveyResultDto;
+    const connection = getConnection();
+    const queryRunner = connection.createQueryRunner();
+    const { manager: queryManager } = queryRunner;
+    const NOT_EXIST_ID = 23502;
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const surveyResult = await queryManager
+        .getCustomRepository(SurveyResultRepository)
+        .createSurveyResult();
+      surveyResultId = surveyResult.resultId;
+
+      const promises = contents.map(async (content) => {
+        const questionId = content.question_id;
+        const surveyQuestion = await queryManager
+          .getCustomRepository(SurveyQuestionRepository)
+          .findOne(questionId);
+
+        const surveyAnswerResult = await queryManager
+          .getCustomRepository(SurveyAnswerResultRepository)
+          .createSurveyAnswerResult(surveyResult, surveyQuestion);
+
+        const promises = content.answers.map(async (answer) => {
+          // if(!isEmpty(answer.answer_content)) // 주관식 처리
+          const surveyAnswer = await queryManager
+            .getCustomRepository(SingleChoiceAnswerRepository)
+            .findOne(answer.id);
+
+          await queryManager
+            .getCustomRepository(SurveySingleChoiceAnswerResultRepository)
+            .createSingleChoiceAnswerResult(surveyAnswerResult, surveyAnswer);
+        });
+
+        await Promise.all(promises);
+      });
+
+      await Promise.all(promises);
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      const errorCode = err['code'];
+      const tableId = err['column'];
+
+      if (errorCode === NOT_EXIST_ID) {
+        throw new BadRequestException(`존재하지 않는 ${tableId} 입니다`);
+      }
+    } finally {
+      await queryRunner.release();
+    }
+
+    return { surveyResultId };
   }
 }
