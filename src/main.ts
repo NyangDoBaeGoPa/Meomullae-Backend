@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import * as config from 'config';
 
 import { AppModule } from './app.module';
+import { setupSwagger } from './swagger/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,7 +16,7 @@ async function bootstrap() {
     }),
   );
   app.enableCors();
-
+  setupSwagger(app);
   const serverConfig = config.get('server');
   const port = serverConfig.port;
 
