@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-abstract class Answer {
+abstract class SurveyAnswer {
   @ApiProperty()
   answer_id: number;
 
@@ -11,7 +11,7 @@ abstract class Answer {
   answer_order: number;
 }
 
-abstract class Content {
+abstract class SurveyContent {
   @ApiProperty()
   question_id: number;
 
@@ -24,14 +24,14 @@ abstract class Content {
   @ApiProperty()
   answer_mode: string;
 
-  @ApiProperty({ isArray: true, type: Answer })
-  answers: Answer[];
+  @ApiProperty({ isArray: true, type: SurveyAnswer })
+  answers: SurveyAnswer[];
 }
 
 export abstract class SurveyResponse {
   @ApiProperty()
   surveyId: number;
 
-  @ApiProperty({ isArray: true, type: Content })
-  contents: Content[];
+  @ApiProperty({ isArray: true, type: SurveyContent })
+  contents: SurveyContent[];
 }
